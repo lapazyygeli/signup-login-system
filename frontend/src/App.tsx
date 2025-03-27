@@ -14,11 +14,54 @@ function App() {
   const [userdata, setUserdata] = useState<UserData[]>([]);
 
   const addData = (formData: FormData) => {
-    
+    const newData = {
+      name: formData.name,
+      password: formData.password,
+      passwordConfirmed: formData.passwordConfirmed,
+    };
+    const sendToServer = async () => {
+      const url = "http://localhost:5000/users/add";
+      try {
+        const response: Response = await fetch(url, {
+          method: "POST",
+          body: JSON.stringify(newData),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        if (!response.ok) {
+          throw new Error("Response not okay!");
+        }
+        const responseJsonNewData = await response.json();
+        console.log(responseJsonNewData.message);
+        setUserdata((prev) => [...prev, responseJsonNewData.data]);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    sendToServer();
   };
 
   const deleteData = async (id: string) => {
-    
+    const url = `http://localhost:5000/users/delete`;
+    try {
+      const response = await fetch(url, {
+        method: "DELETE",
+        body: JSON.stringify({ id }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (!response.ok) {
+        throw new Error("Response not okay (delete)!");
+      }
+      const responseJson = await response.json();
+      console.log(responseJson.message);
+      console.log(responseJson.data);
+    } catch (err) {
+      console.log(err);
+    }
+    setUserdata((prev) => prev.filter((data) => data._id !== id));
   };
 
   return (
