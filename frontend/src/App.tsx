@@ -20,7 +20,7 @@ function App() {
       passwordConfirmed: formData.passwordConfirmed,
     };
     const sendToServer = async () => {
-      const url = "http://localhost:5000/users/add";
+      const url = "http://localhost:9000/users/add";
       try {
         const response: Response = await fetch(url, {
           method: "POST",
@@ -43,7 +43,7 @@ function App() {
   };
 
   const deleteData = async (id: string) => {
-    const url = `http://localhost:5000/users/delete`;
+    const url = `http://localhost:9000/users/delete`;
     try {
       const response = await fetch(url, {
         method: "DELETE",
