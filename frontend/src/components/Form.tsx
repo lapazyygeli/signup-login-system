@@ -1,49 +1,39 @@
-import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../redux/store";
+import { 
+  resetForm, 
+  setError, 
+  setSignUpFormData, 
+  SignUpFormData 
+} from "../redux/reducers/signupSlice";
 
 type Props = {
-  addData: (formData: FormData) => void;
+  addData: (formData: SignUpFormData) => void;
 };
 
-export interface FormData {
-  name: string;
-  password: string;
-  passwordConfirmed: string;
-}
-
-const initialState: FormData = {
-  name: "",
-  password: "",
-  passwordConfirmed: "",
-};
-
+// TÄN NIMEKS SIGN UP FORM
 const Form = ({ addData }: Props) => {
-  const [formData, setFormData] = useState<FormData>(initialState);
-  const [error, setError] = useState<string | null>(null);
+  const formData = useSelector((state: RootState) => state.signup.signUpFormData);
+  const error = useSelector((state: RootState) => state.signup.error);
+  const dispatch = useDispatch();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const inputName = e.target.name;
     const inputValue = e.target.value;
-    setFormData((prev) => ({
-      ...prev,
-      [inputName]: inputValue,
-    }));
-    setError(null);
+    dispatch(setSignUpFormData({ ...formData, [inputName]: inputValue }));
+    dispatch(setError(null));
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (formData.password !== formData.passwordConfirmed) {
-      setError("Passwords did not match.");
-      setFormData((prev) => ({
-        ...prev,
-        password: "",
-        passwordConfirmed: "",
-      }));
+      dispatch(setError("Passwords did not match."));
+      dispatch(setSignUpFormData({ ...formData, password: "", passwordConfirmed: "" }));
       return;
     }
 
     addData(formData);
-    setFormData(initialState);
+    dispatch(resetForm());
   };
 
   return (
