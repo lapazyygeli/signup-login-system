@@ -2,6 +2,8 @@ import { useState } from "react";
 import Form from "./components/Form.tsx";
 import TableRow from "./components/TableRow.tsx";
 import { FormData } from "./components/Form.tsx";
+import { BrowserRouter } from "react-router";
+import AppRoutes from "./AppRoutes.tsx";
 
 interface UserData {
   _id: string;
@@ -65,6 +67,12 @@ function App() {
   };
 
   return (
+    <BrowserRouter>
+      <AppRoutes />
+    </BrowserRouter>
+  );
+  /*
+  return (
     <>
       <Form addData={addData} />
       <table>
@@ -90,7 +98,7 @@ function App() {
         </tbody>
       </table>
     </>
-  );
+  );*/
 }
 
 export default App;
