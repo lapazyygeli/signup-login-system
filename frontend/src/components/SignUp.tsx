@@ -1,7 +1,9 @@
-import { useState } from "react";
-import Form from "./Form.tsx";
+import SignUpForm from "./SignUpForm.tsx";
 import TableRow from "./TableRow.tsx";
 import { SignUpFormData } from "../redux/reducers/signupSlice.ts";
+import { useDispatch, useSelector } from "react-redux";
+import { addUser, deleteUser } from "../redux/reducers/usersSlice.ts";
+import { RootState } from "../redux/store.ts";
 
 // TÄÄLTÄ SIGN UPISTA PITÄÄ POISTAA TOI TABLE ROW HOMMA JA TEHÄ
 // SIITÄ OMA KOMPONENTTINSA. SEN JÄLKEEN SIIRRETÄÄN KAMPET TÄNNE FORMISTA
@@ -10,7 +12,7 @@ import { SignUpFormData } from "../redux/reducers/signupSlice.ts";
 // ADDDATA FUNKTIO LAITETAAN TOTEUTTAA SIELLÄ MIHIN SE TÄÄLLÄ SYÖTETÄÄN
 // SAMA MYÖS DELETELLE
 
-interface UserData {
+export interface UserData {
   _id: string;
   name: string;
   password: string;
@@ -18,36 +20,8 @@ interface UserData {
 }
 
 const SignUp = () => {
-  const [userdata, setUserdata] = useState<UserData[]>([]);
-
-  const addData = (formData: SignUpFormData) => {
-    const newData = {
-      name: formData.name,
-      password: formData.password,
-      passwordConfirmed: formData.passwordConfirmed,
-    };
-    const sendToServer = async () => {
-      const url = "http://localhost:9000/users/add";
-      try {
-        const response: Response = await fetch(url, {
-          method: "POST",
-          body: JSON.stringify(newData),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-        if (!response.ok) {
-          throw new Error("Response not okay!");
-        }
-        const responseJsonNewData = await response.json();
-        console.log(responseJsonNewData.message);
-        setUserdata((prev) => [...prev, responseJsonNewData.data]);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    sendToServer();
-  };
+  const dispatch = useDispatch();
+  const users = useSelector((state: RootState) => state.users.users);
 
   const deleteData = async (id: string) => {
     const url = `http://localhost:9000/users/delete`;
@@ -68,12 +42,14 @@ const SignUp = () => {
     } catch (err) {
       console.log(err);
     }
-    setUserdata((prev) => prev.filter((data) => data._id !== id));
+    dispatch(deleteUser(id));
   };
+
+  
 
   return (
     <>
-      <Form addData={addData} />
+      <SignUpForm />
       <table>
         <thead>
           <tr>
@@ -84,7 +60,7 @@ const SignUp = () => {
           </tr>
         </thead>
         <tbody>
-          {userdata.map((prev) => (
+          {users.map((prev) => (
             <TableRow
               key={prev._id}
               id={prev._id}

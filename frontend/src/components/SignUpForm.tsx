@@ -1,21 +1,19 @@
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../redux/store";
-import { 
-  resetForm, 
-  setError, 
-  setSignUpFormData, 
-  SignUpFormData 
+import { AppDispatch, RootState } from "../redux/store";
+import {
+  resetForm,
+  setError,
+  setSignUpFormData,
 } from "../redux/reducers/signupSlice";
-
-type Props = {
-  addData: (formData: SignUpFormData) => void;
-};
+import { addUserAsync } from "../redux/thunks/usersThunks";
 
 // TÄN NIMEKS SIGN UP FORM
-const Form = ({ addData }: Props) => {
-  const formData = useSelector((state: RootState) => state.signup.signUpFormData);
+const Form = () => {
+  const formData = useSelector(
+    (state: RootState) => state.signup.signUpFormData
+  );
   const error = useSelector((state: RootState) => state.signup.error);
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const inputName = e.target.name;
@@ -28,11 +26,12 @@ const Form = ({ addData }: Props) => {
     e.preventDefault();
     if (formData.password !== formData.passwordConfirmed) {
       dispatch(setError("Passwords did not match."));
-      dispatch(setSignUpFormData({ ...formData, password: "", passwordConfirmed: "" }));
+      dispatch(
+        setSignUpFormData({ ...formData, password: "", passwordConfirmed: "" })
+      );
       return;
     }
-
-    addData(formData);
+    dispatch(addUserAsync(formData));
     dispatch(resetForm());
   };
 
