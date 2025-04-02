@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { SignUpFormData } from "../reducers/signupSlice";
-import { UserData } from "../../components/SignUp";
+import { UserData } from "../reducers/usersSlice";
 
 const ACTION_TYPES = {
   addUserAsync: "users/addUserAsync",
@@ -38,4 +38,31 @@ const addUserAsync = createAsyncThunk(
   }
 );
 
-export { addUserAsync };
+const deleteUserAsync = createAsyncThunk(
+  ACTION_TYPES.deleteUserAsync,
+  async (id: string, thunkAPI) => {
+    try {
+      const response = await fetch(URLS.deleteUserAsync, {
+        method: "DELETE",
+        body: JSON.stringify({ id }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (!response.ok) {
+        throw new Error("Response not okay (delete)!");
+      }
+      const responseJson = await response.json();
+      console.log(responseJson.message);
+      console.log(responseJson.data);
+      return id;
+    } catch (err) {
+      if (err instanceof Error) {
+        return thunkAPI.rejectWithValue(err.message);
+      }
+      return thunkAPI.rejectWithValue("An unknown error occurred");
+    }
+  }
+);
+
+export { addUserAsync, deleteUserAsync };

@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { addUserAsync } from "../thunks/usersThunks";
+import { addUserAsync, deleteUserAsync } from "../thunks/usersThunks";
 
-interface UserData {
+export interface UserData {
   _id: string;
   name: string;
   password: string;
@@ -29,10 +29,24 @@ const usersSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(addUserAsync.fulfilled, (state, action: PayloadAction<UserData>) => {
-        usersSlice.caseReducers.addUser(state, action);
-      })
+      .addCase(
+        addUserAsync.fulfilled,
+        (state, action: PayloadAction<UserData>) => {
+          usersSlice.caseReducers.addUser(state, action);
+        }
+      )
       .addCase(addUserAsync.rejected, (_, action) => {
+        console.log(action.payload);
+      });
+
+    builder
+      .addCase(
+        deleteUserAsync.fulfilled,
+        (state, action: PayloadAction<string>) => {
+          usersSlice.caseReducers.deleteUser(state, action);
+        }
+      )
+      .addCase(deleteUserAsync.rejected, (_, action) => {
         console.log(action.payload);
       });
   },
