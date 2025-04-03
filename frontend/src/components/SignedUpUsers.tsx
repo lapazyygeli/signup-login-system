@@ -9,9 +9,9 @@ const SignedUpUsers = () => {
     <table>
       <thead>
         <tr>
-          <th>Name</th>
-          <th>password</th>
-          <th>passwordConfirmed</th>
+          <th className="pr-3">Name</th>
+          <th className="pr-3">Password</th>
+          <th className="pr-3">Password confirmed</th>
           <th></th>
         </tr>
       </thead>
