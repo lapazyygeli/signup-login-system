@@ -27,7 +27,7 @@ const addUserAsync = createAsyncThunk(
         throw new Error("Response not okay!");
       }
       const responseJsonNewData = await response.json();
-      console.log(responseJsonNewData.message);
+      console.log(responseJsonNewData.message); // Not necessary here
       return responseJsonNewData.data as UserData;
     } catch (err) {
       if (err instanceof Error) {

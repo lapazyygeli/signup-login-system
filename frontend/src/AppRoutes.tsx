@@ -1,18 +1,32 @@
-import { Routes, Route } from "react-router";
+import { Routes, Route, Navigate } from "react-router";
 import AuthLayout from "./components/AuthLayout";
 import Login from "./components/Login";
 import SignUp from "./components/SignUp";
 import Home from "./components/Home";
 import About from "./components/About";
+import ProtectedRoute from "./components/ProtectedRoute";
+import LoggedInLayout from "./components/LoggedInLayout";
+import Dashboard from "./components/Dashboard";
+import { useSelector } from "react-redux";
+import { RootState } from "./redux/store";
 
 const AppRoutes = () => {
+  const isUserLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
+
   return (
     <Routes>
-      <Route element={<AuthLayout />}>
+      <Route element={isUserLoggedIn ? <Navigate to="/dashboard" /> : <AuthLayout />}>
         <Route index element={<Home />} />
         <Route path="about" element={<About />} />
         <Route path="login" element={<Login />} />
         <Route path="signup" element={<SignUp />} />
+      </Route>
+      <Route element={<ProtectedRoute />}>
+        <Route element={<LoggedInLayout />}>
+          <Route path="dashboard" element={<Dashboard />} />
+          {/* + Some other routes. Consider checking out if it possible to reuse
+              about and home pages in logged in mode (personalized) */}
+        </Route>
       </Route>
     </Routes>
   );

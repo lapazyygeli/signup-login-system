@@ -1,3 +1,4 @@
+
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../redux/store";
 import {
@@ -7,6 +8,7 @@ import {
 } from "../redux/reducers/loginSlice";
 import InputField from "./InputField";
 import { Link } from "react-router";
+import loginAsync from "../redux/thunks/authThunks";
 
 const LoginForm = () => {
   const formData = useSelector((state: RootState) => state.login.loginFormData);
@@ -22,7 +24,7 @@ const LoginForm = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // IMPLEMENT THE LOGIN LOGIC HERE (JUST MAYBE DISPATCH)
+    dispatch(loginAsync(formData));
     dispatch(resetForm());
   };
 

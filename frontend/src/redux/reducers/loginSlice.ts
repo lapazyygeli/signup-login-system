@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-interface LoginFormData {
+export interface LoginFormData {
   name: string;
   password: string;
 }
