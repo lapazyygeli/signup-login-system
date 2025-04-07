@@ -25,6 +25,9 @@ const authSlice = createSlice({
       // So that in session based approach session id would be destroyed?
       // Maybe not needed when using jwt.
     },
+    setError: (state, action: PayloadAction<string|null>) => {
+      state.error = action.payload;
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -41,5 +44,5 @@ const authSlice = createSlice({
   },
 });
 
-export const { logout } = authSlice.actions;
+export const { logout, setError } = authSlice.actions;
 export default authSlice.reducer;

@@ -3,16 +3,18 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../redux/store";
 import {
   resetForm,
-  setError,
   setLoginFormData,
 } from "../redux/reducers/loginSlice";
 import InputField from "./InputField";
 import { Link } from "react-router";
 import loginAsync from "../redux/thunks/authThunks";
+import { setError } from "../redux/reducers/authSlice";
 
+// TODO: Multiple users should not have the same name. Names must be unique.
+// Otherwise crashes.
 const LoginForm = () => {
   const formData = useSelector((state: RootState) => state.login.loginFormData);
-  const error = useSelector((state: RootState) => state.login.error);
+  const error = useSelector((state: RootState) => state.auth.error);
   const dispatch = useDispatch<AppDispatch>();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

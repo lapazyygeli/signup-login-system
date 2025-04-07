@@ -7,7 +7,6 @@ export interface LoginFormData {
 
 interface LoginFormState {
   loginFormData: LoginFormData;
-  error: string | null;
 }
 
 const initialState: LoginFormState = {
@@ -15,7 +14,6 @@ const initialState: LoginFormState = {
     name: "",
     password: "",
   },
-  error: null,
 };
 
 const loginSlice = createSlice({
@@ -27,14 +25,9 @@ const loginSlice = createSlice({
     },
     resetForm: (state) => {
       state.loginFormData = initialState.loginFormData;
-      state.error = null;
-    },
-    setError: (state, action: PayloadAction<string|null>) => {
-      state.error = action.payload;
     },
   },
 });
 
-
-export const { setLoginFormData, resetForm, setError } = loginSlice.actions;
+export const { setLoginFormData, resetForm } = loginSlice.actions;
 export default loginSlice.reducer;
