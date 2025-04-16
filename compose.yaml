@@ -24,6 +24,8 @@ services:
       - backend_node_modules:/signup-login-system/backend/node_modules
     environment:
       - CHOKIDAR_USEPOLLING=true
+    env_file:
+      - .env
 
   mongo-database:
     container_name: mongo-database

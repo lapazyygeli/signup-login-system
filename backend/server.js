@@ -3,17 +3,43 @@ import express from "express";
 import cors from "cors";
 import userRouter from "./routes/user.route.js";
 import authRouter from "./routes/auth.route.js";
+import session, { MemoryStore } from "express-session";
 
 // scripteihin (package.json) voidaan tehä myös nodemon, + typescript.
+// TODO: All of our inputs should be sanitized.
 
 const app = express();
 const port = 5000;
 
 connectDB();
 
-// All of our inputs should be sanitized.
-app.use("/", cors()); // tällä hetkellä auki jokaselle. Ei hyvä! Kts. Express cors.
-app.use("/", express.json()); // liittyy siihen, että req.body ei oo undefined. Ja content-type
+const corsOptions = {
+  origin: "http://localhost:4000",
+  credentials: true,
+};
+app.use("/", cors(corsOptions));
+app.use("/", express.json());
+app.use(session({
+  // Sessions are created for every request 
+  // for a specific path automatically
+  secret: process.env.SESSION_SECRET,
+  store: new MemoryStore(),
+  cookie: {
+    maxAge: 3600000,
+    httpOnly: true,
+    
+    // Requires an https-enabled website.
+    // HTTPS is necessary for secure cookies
+    // For production should be set to true.
+    secure: false,
+  },
+  resave: false,
+
+  // false: Means that session isn't saved to session store if 
+  // it's not modified. true: useful for tracking traffic
+  // in a website. Saves all sessions to store, even umodified ones.
+  saveUninitialized: false,
+}));
 app.use("/users", userRouter);
 app.use("/auth", authRouter);
 

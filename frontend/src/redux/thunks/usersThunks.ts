@@ -15,6 +15,8 @@ const URLS = {
 const addUserAsync = createAsyncThunk(
   ACTION_TYPES.addUserAsync,
   async (formData: SignUpFormData, thunkAPI) => {
+    // TODO: consider if there should be some kind of authentication
+    // headers when passing credentials. 
     try {
       const response: Response = await fetch(URLS.addUserAsync, {
         method: "POST",
@@ -27,7 +29,7 @@ const addUserAsync = createAsyncThunk(
         throw new Error("Response not okay!");
       }
       const responseJsonNewData = await response.json();
-      console.log(responseJsonNewData.message); // Not necessary here
+      console.log(responseJsonNewData.message); // TODO: Not necessary here
       return responseJsonNewData.data as UserData;
     } catch (err) {
       if (err instanceof Error) {
