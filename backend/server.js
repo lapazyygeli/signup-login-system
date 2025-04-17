@@ -27,6 +27,10 @@ app.use(session({
   cookie: {
     maxAge: 3600000,
     httpOnly: true,
+
+    // Cookie is available in every path.
+    // Implicilty sent.
+    path: "/",
     
     // Requires an https-enabled website.
     // HTTPS is necessary for secure cookies

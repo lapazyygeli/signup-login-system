@@ -16,11 +16,10 @@ const loginUser = async (req, res) => {
       return res.status(401).json({ error: "Invalid credentials" });
     }
 
-    // Create session and put there user's id
     // Session data is not saved in the cookie itself, 
     // just the session ID (not user id).
+    // Modifying req.session saves the session
     req.session.userId = user._id.toString();
-    console.log(req.session.userId);
 
     res.json({
       message: "Login successful!",

@@ -1,18 +1,12 @@
 import { NavLink } from "react-router";
+type NavItem = { label: string; path: string };
 
-const navLinks = [
-  { path: "/", label: "Home" },
-  { path: "/about", label: "About" },
-  { path: "/login", label: "Login" },
-  { path: "/signup", label: "Sign up" },
-];
-
-const NavBar = () => {
+const NavBar = ({ navLinks }: { navLinks: NavItem[] }) => {
   return (
     <nav className="w-screen bg-indigo-500 h-fit overflow-hidden">
       <ul className="flex flex-row justify-end px-16 py-4">
         <div className="flex flex-row gap-6 text-white font-medium">
-          {navLinks.map(({ path, label }) => (
+          {navLinks.map(({ label, path }) => (
             <NavLink
               key={path}
               to={path}

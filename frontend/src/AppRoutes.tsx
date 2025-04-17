@@ -9,6 +9,7 @@ import LoggedInLayout from "./components/LoggedInLayout";
 import Dashboard from "./components/Dashboard";
 import { useSelector } from "react-redux";
 import { RootState } from "./redux/store";
+import Profile from "./components/Profile";
 
 const AppRoutes = () => {
   const isUserLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
@@ -24,6 +25,7 @@ const AppRoutes = () => {
       <Route element={<ProtectedRoute />}>
         <Route element={<LoggedInLayout />}>
           <Route path="dashboard" element={<Dashboard />} />
+          <Route path="profile" element={<Profile />} />
           {/* + Some other routes. Consider checking out if it possible to reuse
               about and home pages in logged in mode (personalized) */}
         </Route>
