@@ -1,11 +1,10 @@
 import { Outlet } from "react-router";
-import { loggedInNavLinks } from "../constants/navLinks";
-import NavBar from "./NavBar";
+import LoggedInNavBar from "./LoggedInNavBar";
 
 const LoggedInLayout = () => {
   return (
     <>
-      <NavBar navLinks={loggedInNavLinks} />
+      <LoggedInNavBar />
       <Outlet />
     </>
   );

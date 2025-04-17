@@ -1,11 +1,10 @@
 import { Outlet } from "react-router";
-import NavBar from "./NavBar";
-import { publicNavLinks } from "../constants/navLinks";
+import PublicNavBar from "./PublicNavBar";
 
 const AuthLayout = () => {
   return (
     <>
-      <NavBar navLinks={publicNavLinks} />
+      <PublicNavBar />
       <Outlet />
     </>
   );
