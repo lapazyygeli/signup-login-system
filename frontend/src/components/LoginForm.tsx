@@ -7,7 +7,7 @@ import {
 } from "../redux/reducers/loginSlice";
 import InputField from "./InputField";
 import { Link } from "react-router";
-import loginAsync from "../redux/thunks/authThunks";
+import { loginAsync } from "../redux/thunks/authThunks";
 import { setError } from "../redux/reducers/authSlice";
 
 // TODO: Multiple users should not have the same name. Names must be unique.

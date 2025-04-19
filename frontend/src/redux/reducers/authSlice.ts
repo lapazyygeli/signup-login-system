@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import loginAsync from "../thunks/authThunks";
+import { loginAsync, logoutAsync } from "../thunks/authThunks";
 
 interface AuthState {
   isLoggedIn: boolean;
@@ -17,14 +17,6 @@ const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    logout: (state) => {
-      state.isLoggedIn = false;
-      state.userName = null;
-      state.error = null;
-      // This maybe should be made as a thunk too?
-      // So that in session based approach session id would be destroyed?
-      // Maybe not needed when using jwt.
-    },
     setError: (state, action: PayloadAction<string|null>) => {
       state.error = action.payload;
     }
@@ -37,12 +29,20 @@ const authSlice = createSlice({
         state.error = null;
       })
       .addCase(loginAsync.rejected, (state, action) => {
-        state.isLoggedIn = false;
+        state.isLoggedIn = false; // TODO: code duplication
         state.userName = null;
-        state.error = (action.payload as string) ?? "Unknown login error";
+        state.error = action.payload as string;
+      });
+
+    builder
+      .addCase(logoutAsync.fulfilled, () => initialState)
+      .addCase(logoutAsync.rejected, (state, action) => {
+        state.isLoggedIn = false; // TODO: code duplication
+        state.userName = null;
+        state.error = action.payload as string;
       });
   },
 });
 
-export const { logout, setError } = authSlice.actions;
+export const { setError } = authSlice.actions;
 export default authSlice.reducer;

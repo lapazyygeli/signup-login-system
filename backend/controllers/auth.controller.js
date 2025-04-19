@@ -16,7 +16,7 @@ const loginUser = async (req, res) => {
       return res.status(401).json({ error: "Invalid credentials" });
     }
 
-    // Session data is not saved in the cookie itself, 
+    // Session data is not saved in the cookie itself,
     // just the session ID (not user id).
     // Modifying req.session saves the session
     req.session.userId = user._id.toString();
@@ -31,4 +31,18 @@ const loginUser = async (req, res) => {
   }
 };
 
-export { loginUser };
+const logoutUser = async (req, res) => {
+  req.session.destroy((err) => {
+    if (err) {
+      res.status(500).send("Error logging out");
+    }
+
+    // Considerations: "Not clearing cookie so that it could expire. User could be
+    // logged in automatically when entering the site"
+    // TODO: extract string, make it const
+    res.clearCookie("connect.sid");
+    res.status(200).end();
+  });
+};
+
+export { loginUser, logoutUser };
