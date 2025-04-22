@@ -6,5 +6,6 @@ import * as authController from "./../controllers/auth.controller.js";
 const authRouter = express.Router();
 authRouter.post("/login", authController.loginUser);
 authRouter.post("/logout", authController.logoutUser);
+authRouter.get("/session", authController.isUserLoggedIn);
 
 export default authRouter;

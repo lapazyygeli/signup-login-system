@@ -4,11 +4,13 @@ import { LoginFormData } from "../reducers/loginSlice";
 const ACTION_TYPES = {
   loginAsync: "auth/loginAsync",
   logoutAsync: "auth/logoutAsync",
+  checkSessionAsync: "auth/checkSessionAsync",
 };
 
 const URLS = {
   loginAsync: "http://localhost:9000/auth/login",
   logoutAsync: "http://localhost:9000/auth/logout",
+  checkSessionAsync: "http://localhost:9000/auth/session",
 };
 
 const loginAsync = createAsyncThunk(
@@ -62,4 +64,26 @@ const logoutAsync = createAsyncThunk(
   }
 );
 
-export { loginAsync, logoutAsync };
+const checkSessionAsync = createAsyncThunk(
+  ACTION_TYPES.checkSessionAsync,
+  async (_, thunkAPI) => {
+    try {
+      const response = await fetch(URLS.checkSessionAsync, {
+        method: "GET",
+        credentials: "include",
+      });
+
+      if (!response.ok) {
+        console.clear();
+        return thunkAPI.rejectWithValue("User doesn't own a session");
+      }
+    } catch (err) {
+      if (err instanceof Error) {
+        return thunkAPI.rejectWithValue(err.message);
+      }
+      return thunkAPI.rejectWithValue("An unknown error occurred");
+    }
+  }
+);
+
+export { loginAsync, logoutAsync, checkSessionAsync };

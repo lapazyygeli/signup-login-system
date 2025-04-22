@@ -22,11 +22,6 @@ const LoggedInNavBar = () => {
           >
             Logout
           </button>
-          {
-            // TODO: 
-            //{ label: "Logout", path: "/" }, // isLoggedIn still true
-            // --> doesn't go to "/". Also cookie should be handled
-          }
         </div>
       </ul>
     </nav>

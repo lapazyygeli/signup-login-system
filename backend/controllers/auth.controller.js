@@ -34,15 +34,20 @@ const loginUser = async (req, res) => {
 const logoutUser = async (req, res) => {
   req.session.destroy((err) => {
     if (err) {
-      res.status(500).send("Error logging out");
+      return res.status(500).send("Error logging out");
     }
 
-    // Considerations: "Not clearing cookie so that it could expire. User could be
-    // logged in automatically when entering the site"
     // TODO: extract string, make it const
     res.clearCookie("connect.sid");
     res.status(200).end();
   });
 };
 
-export { loginUser, logoutUser };
+const isUserLoggedIn = (req, res) => {
+  if (req.session.userId) {
+    return res.status(200).end();
+  }
+  res.status(401).end();
+};
+
+export { loginUser, logoutUser, isUserLoggedIn };
