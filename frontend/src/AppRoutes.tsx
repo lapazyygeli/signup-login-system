@@ -7,21 +7,17 @@ import About from "./components/About";
 import ProtectedRoute from "./components/ProtectedRoute";
 import LoggedInLayout from "./components/LoggedInLayout";
 import Dashboard from "./components/Dashboard";
-import { useDispatch, useSelector } from "react-redux";
-import {  AppDispatch, RootState } from "./redux/store";
+import { useSelector } from "react-redux";
+import { RootState } from "./redux/store";
 import Profile from "./components/Profile";
-import { useEffect } from "react";
-import { checkSessionAsync } from "./redux/thunks/authThunks";
+import useSessionAutoLogout from "./hooks/useSessionAutoLogout";
 
 
 const AppRoutes = () => {
-  const dispatch = useDispatch<AppDispatch>();
   const isUserLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
   const isSessionChecked = useSelector((state: RootState) => state.auth.isSessionChecked);
 
-  useEffect(() => {
-    dispatch(checkSessionAsync());
-  }, [dispatch]);
+  useSessionAutoLogout();
 
   // Don't show anything until session check is complete.
   // It checks if user has logged in based on (saved) session.

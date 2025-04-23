@@ -1,5 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { LoginFormData } from "../reducers/loginSlice";
+import { setupAutoLogout } from "../../utils/session";
+import { AppDispatch } from "../store";
 
 const ACTION_TYPES = {
   loginAsync: "auth/loginAsync",
@@ -26,12 +28,15 @@ const loginAsync = createAsyncThunk(
         credentials: "include",
       });
 
-      if (!response.ok) {
-        return thunkAPI.rejectWithValue("Invalid credentials");
-      }
+      if (!response.ok) return thunkAPI.rejectWithValue("Invalid credentials");
 
-      const json = await response.json();
-      return json.name as string;
+      const data = await response.json();
+      const { name, expiresAt } = data;
+
+      localStorage.setItem("sessionExpiresAt", expiresAt.toString());
+      setupAutoLogout(thunkAPI.dispatch as AppDispatch, expiresAt);
+
+      return name;
     } catch (err) {
       if (err instanceof Error) {
         return thunkAPI.rejectWithValue(err.message);
