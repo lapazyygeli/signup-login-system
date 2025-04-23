@@ -1,3 +1,4 @@
+import { getSessionExpiration } from "../services/session.service.js";
 import * as authService from "./../services/auth.service.js";
 
 const loginUser = async (req, res) => {
@@ -18,12 +19,22 @@ const loginUser = async (req, res) => {
 
     // Session data is not saved in the cookie itself,
     // just the session ID (not user id).
-    // Modifying req.session saves the session
     req.session.userId = user._id.toString();
 
-    res.json({
-      message: "Login successful!",
-      name: user.name,
+    // Save session before fetching its expiration
+    req.session.save(async () => {
+      const expiresAt = await getSessionExpiration(req.sessionID);
+      if (!expiresAt) {
+        return res
+          .status(500)
+          .json({ error: "Could not retrieve session expiration" });
+      }
+
+      res.json({
+        message: "Login successful!",
+        name: user.name,
+        expiresAt,
+      });
     });
   } catch (err) {
     console.error(err); // TODO: Not necessary here
