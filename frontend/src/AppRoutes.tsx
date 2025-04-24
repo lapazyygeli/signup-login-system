@@ -35,8 +35,6 @@ const AppRoutes = () => {
         <Route element={<LoggedInLayout />}>
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="profile" element={<Profile />} />
-          {/* + Some other routes. Consider checking out if it possible to reuse
-              about and home pages in logged in mode (personalized) */}
         </Route>
       </Route>
     </Routes>
