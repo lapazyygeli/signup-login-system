@@ -1,15 +1,11 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { SignUpFormData } from "../reducers/signupSlice";
 import { UserData } from "../reducers/usersSlice";
+import { API_URLS } from "../../constants/apiRoutes";
 
 const ACTION_TYPES = {
   addUserAsync: "users/addUserAsync",
   deleteUserAsync: "users/deleteUserAsync",
-};
-
-const URLS = {
-  addUserAsync: "http://localhost:9000/users/add",
-  deleteUserAsync: "http://localhost:9000/users/delete",
 };
 
 const addUserAsync = createAsyncThunk(
@@ -18,7 +14,7 @@ const addUserAsync = createAsyncThunk(
     // TODO: consider if there should be some kind of authentication
     // headers when passing credentials. 
     try {
-      const response: Response = await fetch(URLS.addUserAsync, {
+      const response: Response = await fetch(API_URLS.users.register, {
         method: "POST",
         body: JSON.stringify(formData),
         headers: {
@@ -44,7 +40,7 @@ const deleteUserAsync = createAsyncThunk(
   ACTION_TYPES.deleteUserAsync,
   async (id: string, thunkAPI) => {
     try {
-      const response = await fetch(URLS.deleteUserAsync, {
+      const response = await fetch(API_URLS.users.unregister, {
         method: "DELETE",
         body: JSON.stringify({ id }),
         headers: {

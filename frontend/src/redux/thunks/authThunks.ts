@@ -2,6 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { LoginFormData } from "../reducers/loginSlice";
 import { setupAutoLogout } from "../../utils/session";
 import { AppDispatch } from "../store";
+import { API_URLS } from "../../constants/apiRoutes";
 
 const ACTION_TYPES = {
   loginAsync: "auth/loginAsync",
@@ -9,17 +10,11 @@ const ACTION_TYPES = {
   checkSessionAsync: "auth/checkSessionAsync",
 };
 
-const URLS = {
-  loginAsync: "http://localhost:9000/auth/login",
-  logoutAsync: "http://localhost:9000/auth/logout",
-  checkSessionAsync: "http://localhost:9000/auth/session",
-};
-
 const loginAsync = createAsyncThunk(
   ACTION_TYPES.loginAsync,
   async (formData: LoginFormData, thunkAPI) => {
     try {
-      const response = await fetch(URLS.loginAsync, {
+      const response = await fetch(API_URLS.users.login, {
         method: "POST",
         body: JSON.stringify(formData),
         headers: {
@@ -50,7 +45,7 @@ const logoutAsync = createAsyncThunk(
   ACTION_TYPES.logoutAsync,
   async (_, thunkAPI) => {
     try {
-      const response = await fetch(URLS.logoutAsync, {
+      const response = await fetch(API_URLS.users.logout, {
         method: "POST",
         credentials: "include",
       });
@@ -73,7 +68,7 @@ const checkSessionAsync = createAsyncThunk(
   ACTION_TYPES.checkSessionAsync,
   async (_, thunkAPI) => {
     try {
-      const response = await fetch(URLS.checkSessionAsync, {
+      const response = await fetch(API_URLS.users.session, {
         method: "GET",
         credentials: "include",
       });

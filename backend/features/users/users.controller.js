@@ -1,5 +1,39 @@
-import { getSessionExpiration } from "../services/session.service.js";
-import * as authService from "./../services/auth.service.js";
+import * as usersService from "./users.service.js";
+
+const registerUser = async (req, res) => {
+  if (!req.body) {
+    return res.status(400).json({ error: "Something bad happened!" });
+  }
+  try {
+    const user = {
+      name: req.body.name,
+      password: req.body.password,
+      passwordConfirmed: req.body.passwordConfirmed,
+    };
+    const newUser = await usersService.add(user);
+    res.json({
+      message: "User added to database",
+      data: newUser,
+    });
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+const unregisterUser = async (req, res) => {
+  if (!req.body) {
+    return res.status(400).json({ error: "Something bad happened!" });
+  }
+  try {
+    const query = await usersService.remove(req.body.id);
+    res.json({
+      message: "Item deleted succesfully!",
+      data: query,
+    });
+  } catch (err) {
+    console.error(err);
+  }
+};
 
 const loginUser = async (req, res) => {
   const { name, password } = req.body;
@@ -9,7 +43,7 @@ const loginUser = async (req, res) => {
   }
 
   try {
-    const user = await authService.findUserByName(name);
+    const user = await usersService.findUserByName(name);
     const isUserInvalid = !user || user.password !== password;
     // TODO: I should compare hashed passwords and make this better
 
@@ -23,7 +57,7 @@ const loginUser = async (req, res) => {
 
     // Save session before fetching its expiration
     req.session.save(async () => {
-      const expiresAt = await getSessionExpiration(req.sessionID);
+      const expiresAt = await usersService.getSessionExpiration(req.sessionID);
       if (!expiresAt) {
         return res
           .status(500)
@@ -61,4 +95,4 @@ const isUserLoggedIn = (req, res) => {
   res.status(401).end();
 };
 
-export { loginUser, logoutUser, isUserLoggedIn };
+export { registerUser, unregisterUser, loginUser, logoutUser, isUserLoggedIn };

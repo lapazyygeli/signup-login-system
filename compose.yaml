@@ -7,11 +7,11 @@ services:
     ports:
       - 4000:3000
     volumes:
-      - ./frontend:/signup-login-system/frontend # yhistetään front folder to container workdir - lukee suoraan
+      - ./frontend:/signup-login-system/frontend # connects front folder to container workdir - reads directly
       - frontend_node_modules:/signup-login-system/frontend/node_modules # ignore node_modules from the local machine
     environment:
       - CHOKIDAR_USEPOLLING=true # for dev purposes (polls changes immediately)
-  
+
   backend:
     container_name: backend
     build: ./backend
@@ -25,19 +25,18 @@ services:
     environment:
       - CHOKIDAR_USEPOLLING=true
     env_file:
-      - .env
+      - ./backend/.env
 
   mongo-database:
     container_name: mongo-database
     image: mongo
-    ports: 
+    ports:
       - 27017:27017
 
 volumes:
   frontend_node_modules:
   backend_node_modules:
-
-# These volumes persist inside Docker, meaning dependencies 
+# These volumes persist inside Docker, meaning dependencies
 # are installed once and kept even if the container restarts.
-# This prevents overwriting node_modules when 
+# This prevents overwriting node_modules when
 # syncing your local project folder.

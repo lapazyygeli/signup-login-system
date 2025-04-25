@@ -1,21 +1,17 @@
 import { connectDB } from "./database/init.js";
 import express from "express";
 import cors from "cors";
-import userRouter from "./routes/user.route.js";
-import authRouter from "./routes/auth.route.js";
+import usersRouter from "./features/users/users.route.js";
 import session from "express-session";
 import MongoStore from "connect-mongo";
-
 // scripteihin (package.json) voidaan tehä myös nodemon, + typescript.
 // TODO: All of our inputs should be sanitized.
 
 const app = express();
-const port = 5000;
-
 connectDB();
 
 const corsOptions = {
-  origin: "http://localhost:4000",
+  origin: process.env.CLIENT_URL,
   credentials: true,
 };
 app.use("/", cors(corsOptions));
@@ -27,7 +23,7 @@ app.use(
     secret: process.env.SESSION_SECRET,
     store: MongoStore.create({
       mongoUrl: process.env.DB_URL,
-      collectionName: "sessions",
+      collectionName: process.env.DB_COLLECTION_SESSIONS,
     }),
     cookie: {
       maxAge: 1000 * 60 * 60,
@@ -50,9 +46,8 @@ app.use(
     saveUninitialized: false,
   })
 );
-app.use("/users", userRouter);
-app.use("/auth", authRouter);
+app.use("/users", usersRouter);
 
-app.listen(port, () => {
-  console.log(`Listening on port ${port}`);
+app.listen(process.env.BACKEND_PORT, () => {
+  console.log(`Listening on port ${process.env.BACKEND_PORT}`);
 });
