@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../redux/store";
-import { checkSessionAsync, logoutAsync } from "../redux/thunks/authThunks";
+import { checkSessionAsync, logoutAsync } from "../redux/thunks/userThunks";
 import { setupAutoLogout } from "../utils/session";
 
 const useSessionAutoLogout = () => {

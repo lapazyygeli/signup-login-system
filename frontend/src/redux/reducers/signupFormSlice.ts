@@ -1,6 +1,4 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-// Basically this holds both action creators
-// and __one reducer__ for each case in total
 
 export interface SignUpFormData {
   name: string;
@@ -22,7 +20,7 @@ const initialState: SignUpFormState = {
   error: null,
 };
 
-const signupSlice = createSlice({
+const signupFormSlice = createSlice({
   name: "signup",
   initialState,
   reducers: {
@@ -47,5 +45,5 @@ const signupSlice = createSlice({
   };
 };*/
 
-export const { setSignUpFormData, resetForm, setError } = signupSlice.actions;
-export default signupSlice.reducer; // export slice as a reducer
+export const { setSignUpFormData, resetForm, setError } = signupFormSlice.actions;
+export default signupFormSlice.reducer; // export slice as a reducer

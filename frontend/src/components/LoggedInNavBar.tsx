@@ -1,7 +1,7 @@
 import { useDispatch } from "react-redux";
 import NavLinks from "./NavLinks";
 import { AppDispatch } from "../redux/store";
-import { logoutAsync } from "../redux/thunks/authThunks";
+import { logoutAsync } from "../redux/thunks/userThunks";
 
 const navLinks = [
   { label: "Dashboard", path: "/dashboard" },

@@ -3,24 +3,24 @@ import {
   checkSessionAsync,
   loginAsync,
   logoutAsync,
-} from "../thunks/authThunks";
+} from "../thunks/userThunks";
 
-interface AuthState {
+interface UserState {
   isLoggedIn: boolean;
   userName: string | null;
   error: string | null;
   isSessionChecked: boolean;
 }
 
-const initialState: AuthState = {
+const initialState: UserState = {
   isLoggedIn: false,
   userName: null,
   error: null,
   isSessionChecked: false,
 };
 
-const authSlice = createSlice({
-  name: "auth",
+const userSlice = createSlice({
+  name: "user",
   initialState,
   reducers: {
     setError: (state, action: PayloadAction<string | null>) => {
@@ -65,5 +65,5 @@ const authSlice = createSlice({
   },
 });
 
-export const { setError } = authSlice.actions;
-export default authSlice.reducer;
+export const { setError } = userSlice.actions;
+export default userSlice.reducer;

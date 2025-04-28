@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { SignUpFormData } from "../reducers/signupSlice";
+import { SignUpFormData } from "../reducers/signupFormSlice";
 import { UserData } from "../reducers/usersSlice";
 import { API_URLS } from "../../constants/apiRoutes";
 

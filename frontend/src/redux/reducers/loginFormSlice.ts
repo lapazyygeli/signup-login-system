@@ -16,7 +16,7 @@ const initialState: LoginFormState = {
   },
 };
 
-const loginSlice = createSlice({
+const loginFormSlice = createSlice({
   name: "login",
   initialState,
   reducers: {
@@ -29,5 +29,5 @@ const loginSlice = createSlice({
   },
 });
 
-export const { setLoginFormData, resetForm } = loginSlice.actions;
-export default loginSlice.reducer;
+export const { setLoginFormData, resetForm } = loginFormSlice.actions;
+export default loginFormSlice.reducer;

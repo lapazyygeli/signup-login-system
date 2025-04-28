@@ -4,15 +4,15 @@ import {
   resetForm,
   setError,
   setSignUpFormData,
-} from "../redux/reducers/signupSlice";
+} from "../redux/reducers/signupFormSlice";
 import { addUserAsync } from "../redux/thunks/usersThunks";
 import InputField from "./InputField";
 
 const SignUpForm = () => {
   const formData = useSelector(
-    (state: RootState) => state.signup.signUpFormData
+    (state: RootState) => state.signupForm.signUpFormData
   );
-  const error = useSelector((state: RootState) => state.signup.error);
+  const error = useSelector((state: RootState) => state.signupForm.error);
   const dispatch = useDispatch<AppDispatch>();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

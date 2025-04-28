@@ -14,8 +14,8 @@ import useSessionAutoLogout from "./hooks/useSessionAutoLogout";
 
 
 const AppRoutes = () => {
-  const isUserLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
-  const isSessionChecked = useSelector((state: RootState) => state.auth.isSessionChecked);
+  const isUserLoggedIn = useSelector((state: RootState) => state.user.isLoggedIn);
+  const isSessionChecked = useSelector((state: RootState) => state.user.isSessionChecked);
 
   useSessionAutoLogout();
 

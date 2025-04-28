@@ -1,5 +1,5 @@
 import { AppDispatch } from "../redux/store";
-import { logoutAsync } from "../redux/thunks/authThunks";
+import { logoutAsync } from "../redux/thunks/userThunks";
 
 export const setupAutoLogout = (dispatch: AppDispatch, expiresAt: number) => {
   const remaining = expiresAt - Date.now();

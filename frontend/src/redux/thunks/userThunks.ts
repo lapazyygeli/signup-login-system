@@ -1,13 +1,13 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { LoginFormData } from "../reducers/loginSlice";
+import { LoginFormData } from "../reducers/loginFormSlice";
 import { setupAutoLogout } from "../../utils/session";
 import { AppDispatch } from "../store";
 import { API_URLS } from "../../constants/apiRoutes";
 
 const ACTION_TYPES = {
-  loginAsync: "auth/loginAsync",
-  logoutAsync: "auth/logoutAsync",
-  checkSessionAsync: "auth/checkSessionAsync",
+  loginAsync: "user/loginAsync",
+  logoutAsync: "user/logoutAsync",
+  checkSessionAsync: "user/checkSessionAsync",
 };
 
 const loginAsync = createAsyncThunk(
