@@ -14,11 +14,16 @@ const TableRow = ({ id, name, password, passwordConfirmed }: Props) => {
 
   return (
     <tr>
-      <td>{name}</td>
-      <td>{password}</td>
-      <td>{passwordConfirmed}</td>
-      <td>
-        <button onClick={() => dispatch(deleteUserAsync(id))}>Delete</button>
+      <td className="pr-6 py-2">{name}</td>
+      <td className="pr-6 py-2">{password}</td>
+      <td className="pr-6 py-2">{passwordConfirmed}</td>
+      <td className="pr-6 py-2">
+        <button
+          className="bg-indigo-500 text-white hover:bg-indigo-600 focus:ring-2 focus:ring-indigo-400 focus:ring-opacity-50 rounded-md px-4 py-1 text-sm font-medium transition-all duration-200"
+          onClick={() => dispatch(deleteUserAsync(id))}
+        >
+          Delete
+        </button>
       </td>
     </tr>
   );
