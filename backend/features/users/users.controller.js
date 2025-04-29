@@ -1,8 +1,22 @@
 import * as usersService from "./users.service.js";
 
+const getUsers = async (req, res) => {
+  try {
+    const users = await usersService.getUsers();
+
+    if (!users || users.length === 0) {
+      return res.status(404).json({ error: "No users found." });
+    }
+
+    res.status(200).json(users);
+  } catch (err) {
+    res.status(500).json({ error: err });
+  }
+};
+
 const registerUser = async (req, res) => {
   if (!req.body) {
-    return res.status(400).json({ error: "Something bad happened!" });
+    return res.status(400).json({ error: "A Request without request body." });
   }
   try {
     const user = {
@@ -22,12 +36,12 @@ const registerUser = async (req, res) => {
 
 const unregisterUser = async (req, res) => {
   if (!req.body) {
-    return res.status(400).json({ error: "Something bad happened!" });
+    return res.status(400).json({ error: "A Request without request body." });
   }
   try {
     const query = await usersService.remove(req.body.id);
     res.json({
-      message: "Item deleted succesfully!",
+      message: "User deleted succesfully!",
       data: query,
     });
   } catch (err) {
@@ -95,4 +109,11 @@ const isUserLoggedIn = (req, res) => {
   res.status(401).end();
 };
 
-export { registerUser, unregisterUser, loginUser, logoutUser, isUserLoggedIn };
+export {
+  getUsers,
+  registerUser,
+  unregisterUser,
+  loginUser,
+  logoutUser,
+  isUserLoggedIn,
+};

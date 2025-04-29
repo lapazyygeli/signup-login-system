@@ -1,17 +1,21 @@
 import { UserModel, SessionModel } from "./users.model.js";
 
-async function remove(id) {
-  return await UserModel.findByIdAndDelete(id);
+async function getUsers() {
+  return await UserModel.find();
 }
 
-// Should be implemented so that there can't exist users with the same name
+// TODO: Should be implemented so that there can't exist users with the same name
 async function add(user) {
   return new UserModel(user).save();
 }
 
-const findUserByName = async (name) => {
+async function remove(id) {
+  return await UserModel.findByIdAndDelete(id);
+}
+
+async function findUserByName(name) {
   return await UserModel.findOne({ name });
-};
+}
 
 async function getSessionExpiration(sessionID) {
   const sessionDoc = await SessionModel.findOne({ _id: sessionID });
@@ -26,4 +30,4 @@ async function getSessionExpiration(sessionID) {
   }
 }
 
-export { add, remove, findUserByName, getSessionExpiration };
+export { getUsers, add, remove, findUserByName, getSessionExpiration };

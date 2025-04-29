@@ -4,7 +4,6 @@ import TableRow from "./TableRow";
 
 const SignedUpUsers = () => {
   const users = useSelector((state: RootState) => state.users.users);
-  // TODO: automatic fetch from database
 
   return (
     <div className="w-full max-w-2xl bg-white rounded-lg shadow-md p-6">

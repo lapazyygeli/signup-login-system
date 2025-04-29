@@ -1,5 +1,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { addUserAsync, deleteUserAsync } from "../thunks/usersThunks";
+import {
+  addUserAsync,
+  deleteUserAsync,
+  getUsersAsync,
+} from "../thunks/usersThunks";
 
 export interface UserData {
   _id: string;
@@ -49,6 +53,13 @@ const usersSlice = createSlice({
       .addCase(deleteUserAsync.rejected, (_, action) => {
         console.log(action.payload);
       });
+
+    builder.addCase(
+      getUsersAsync.fulfilled,
+      (state, action: PayloadAction<UserData[]>) => {
+        state.users = action.payload;
+      }
+    );
   },
 });
 
