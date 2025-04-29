@@ -40,7 +40,9 @@ const usersSlice = createSlice({
         }
       )
       .addCase(addUserAsync.rejected, (_, action) => {
-        console.log(action.payload);
+        if (action.payload) {
+          console.log(action.payload);
+        }
       });
 
     builder

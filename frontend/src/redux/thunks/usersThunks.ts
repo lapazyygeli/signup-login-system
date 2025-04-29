@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { SignUpFormData } from "../reducers/signupFormSlice";
+import { setError, SignUpFormData } from "../reducers/signupFormSlice";
 import { UserData } from "../reducers/usersSlice";
 import { API_URLS } from "../../constants/apiRoutes";
 
@@ -22,12 +22,16 @@ const addUserAsync = createAsyncThunk(
           "Content-Type": "application/json",
         },
       });
+
+      const responseJson = await response.json();
+
       if (!response.ok) {
-        throw new Error("Response not okay (addUserAsync).");
+        thunkAPI.dispatch(setError(responseJson.error));
+        return thunkAPI.rejectWithValue(undefined);
       }
-      const responseJsonNewData = await response.json();
-      console.log(responseJsonNewData.message);
-      return responseJsonNewData.data as UserData;
+
+      console.log(responseJson.message);
+      return responseJson.data as UserData;
     } catch (err) {
       if (err instanceof Error) {
         return thunkAPI.rejectWithValue(err.message);

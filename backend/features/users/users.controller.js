@@ -19,11 +19,20 @@ const registerUser = async (req, res) => {
     return res.status(400).json({ error: "A Request without request body." });
   }
   try {
+    const existingUser = await usersService.findUserByName(req.body.name);
+    if (existingUser) {
+      return res.status(409).json({
+        error:
+          "This username is already in use. Please create one that doesn't already exist.",
+      });
+    }
+
     const user = {
       name: req.body.name,
       password: req.body.password,
       passwordConfirmed: req.body.passwordConfirmed,
     };
+
     const newUser = await usersService.add(user);
     res.json({
       message: "User added to database",

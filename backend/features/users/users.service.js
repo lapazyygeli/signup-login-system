@@ -4,7 +4,6 @@ async function getUsers() {
   return await UserModel.find();
 }
 
-// TODO: Should be implemented so that there can't exist users with the same name
 async function add(user) {
   return new UserModel(user).save();
 }

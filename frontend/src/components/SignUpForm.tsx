@@ -9,11 +9,9 @@ import { addUserAsync } from "../redux/thunks/usersThunks";
 import InputField from "./InputField";
 
 const SignUpForm = () => {
-  const formData = useSelector(
-    (state: RootState) => state.signupForm.signUpFormData
-  );
-  const error = useSelector((state: RootState) => state.signupForm.error);
   const dispatch = useDispatch<AppDispatch>();
+  const formData = useSelector((state: RootState) => state.signupForm.signUpFormData);
+  const error = useSelector((state: RootState) => state.signupForm.error);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const inputName = e.target.name;
