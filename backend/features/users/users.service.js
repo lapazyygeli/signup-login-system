@@ -16,6 +16,10 @@ async function findUserByName(name) {
   return await UserModel.findOne({ name });
 }
 
+async function findUserById(id) {
+  return await UserModel.findById(id);
+}
+
 async function getSessionExpiration(sessionID) {
   const sessionDoc = await SessionModel.findOne({ _id: sessionID });
   const sessionObj = JSON.parse(sessionDoc.session);
@@ -29,4 +33,11 @@ async function getSessionExpiration(sessionID) {
   }
 }
 
-export { getUsers, add, remove, findUserByName, getSessionExpiration };
+export {
+  getUsers,
+  add,
+  remove,
+  findUserByName,
+  findUserById,
+  getSessionExpiration,
+};

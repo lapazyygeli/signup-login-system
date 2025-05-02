@@ -14,6 +14,7 @@ const addUserAsync = createAsyncThunk(
   async (formData: SignUpFormData, thunkAPI) => {
     // TODO: consider if there should be some kind of authentication
     // headers when passing credentials.
+    // I mean trying to pass data securely
     try {
       const response: Response = await fetch(API_URLS.users.register, {
         method: "POST",
@@ -47,6 +48,7 @@ const deleteUserAsync = createAsyncThunk(
     try {
       const response = await fetch(API_URLS.users.unregister, {
         method: "DELETE",
+        credentials: "include",
         body: JSON.stringify({ id }),
         headers: {
           "Content-Type": "application/json",
@@ -73,6 +75,7 @@ const getUsersAsync = createAsyncThunk(
     try {
       const response = await fetch(API_URLS.users.users, {
         method: "GET",
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },

@@ -1,3 +1,5 @@
+import * as usersService from "./../features/users/users.service.js";
+
 export const requireAdmin = (req, res, next) => {
   const userId = req.session.userId;
   if (!userId) return res.status(401).json({ error: "Not authenticated" });

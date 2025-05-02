@@ -5,7 +5,7 @@ import { logoutAsync } from "../redux/thunks/userThunks";
 
 const navLinks = [
   { label: "Dashboard", path: "/dashboard" },
-  { label: "Profile", path: "/profile" },
+  { label: "Content", path: "/content" },
 ];
 
 const LoggedInNavBar = () => {

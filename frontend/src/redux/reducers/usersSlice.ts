@@ -14,10 +14,14 @@ export interface UserData {
 
 interface InitialState {
   users: UserData[];
+  loading: boolean;
+  error: null | string;
 }
 
 const initialState: InitialState = {
   users: [],
+  loading: false,
+  error: null,
 };
 
 const usersSlice = createSlice({
@@ -56,12 +60,21 @@ const usersSlice = createSlice({
         console.log(action.payload);
       });
 
-    builder.addCase(
-      getUsersAsync.fulfilled,
-      (state, action: PayloadAction<UserData[]>) => {
-        state.users = action.payload;
-      }
-    );
+    builder
+      .addCase(getUsersAsync.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(
+        getUsersAsync.fulfilled,
+        (state, action: PayloadAction<UserData[]>) => {
+          state.users = action.payload;
+          state.loading = false;
+        }
+      )
+      .addCase(getUsersAsync.rejected, (state, action) => {
+        state.error = action.payload as string;
+        state.loading = false;
+      });
   },
 });
 

@@ -1,6 +1,7 @@
 import { connectDB } from "./database/init.js";
 import express from "express";
 import cors from "cors";
+import { seedAdmin } from "./utils/seedAdmin.js";
 import usersRouter from "./features/users/users.route.js";
 import session from "express-session";
 import MongoStore from "connect-mongo";
@@ -8,7 +9,9 @@ import MongoStore from "connect-mongo";
 // TODO: All of our inputs should be sanitized.
 
 const app = express();
-connectDB();
+connectDB().then(async () => {
+  await seedAdmin();
+});
 
 const corsOptions = {
   origin: process.env.CLIENT_URL,

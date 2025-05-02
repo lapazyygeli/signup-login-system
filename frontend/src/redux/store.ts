@@ -1,8 +1,8 @@
 import { configureStore } from "@reduxjs/toolkit";
 import signupFormSlice from "./reducers/signupFormSlice";
-import usersSlice from "./reducers/usersSlice";
 import loginFormSlice from "./reducers/loginFormSlice";
 import userSlice from "./reducers/userSlice";
+import usersSlice from "./reducers/usersSlice";
 
 const store = configureStore({
   reducer: {

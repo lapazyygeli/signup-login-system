@@ -26,7 +26,8 @@ const useSessionAutoLogout = () => {
 
     //  Hits the backend to ask: "Hey, is there a
     //  valid cookie/session for this user?" and
-    //  based on that changes isUserLoggedIn + isSessionChecked
+    //  based on that fetches back user data
+    //  (because refreshing page delete redux state)
     dispatch(checkSessionAsync());
   }, [dispatch]);
 };

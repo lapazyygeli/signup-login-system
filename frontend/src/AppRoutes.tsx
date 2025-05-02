@@ -9,8 +9,8 @@ import LoggedInLayout from "./components/LoggedInLayout";
 import Dashboard from "./components/Dashboard";
 import { useSelector } from "react-redux";
 import { RootState } from "./redux/store";
-import Profile from "./components/Profile";
 import useSessionAutoLogout from "./hooks/useSessionAutoLogout";
+import Content from "./components/Content";
 
 
 const AppRoutes = () => {
@@ -34,7 +34,7 @@ const AppRoutes = () => {
       <Route element={<ProtectedRoute />}>
         <Route element={<LoggedInLayout />}>
           <Route path="dashboard" element={<Dashboard />} />
-          <Route path="profile" element={<Profile />} />
+          <Route path="content" element={<Content />} />
         </Route>
       </Route>
     </Routes>

@@ -90,6 +90,7 @@ const loginUser = async (req, res) => {
       res.json({
         message: "Login successful!",
         name: user.name,
+        role: user.role,
         expiresAt,
       });
     });
@@ -111,11 +112,25 @@ const logoutUser = async (req, res) => {
   });
 };
 
-const isUserLoggedIn = (req, res) => {
-  if (req.session.userId) {
-    return res.status(200).end();
+const isUserLoggedIn = async (req, res) => {
+  if (!req.session.userId) {
+    return res.status(401).end();
   }
-  res.status(401).end();
+
+  try {
+    const user = await usersService.findUserById(req.session.userId);
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    res.status(200).json({
+      name: user.name,
+      role: user.role,
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Internal server error" });
+  }
 };
 
 export {

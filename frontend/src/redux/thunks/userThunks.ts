@@ -26,12 +26,12 @@ const loginAsync = createAsyncThunk(
       if (!response.ok) return thunkAPI.rejectWithValue("Invalid credentials");
 
       const data = await response.json();
-      const { name, expiresAt } = data;
+      const { name, role, expiresAt } = data;
 
       localStorage.setItem("sessionExpiresAt", expiresAt.toString());
       setupAutoLogout(thunkAPI.dispatch as AppDispatch, expiresAt);
 
-      return name;
+      return { name, role };
     } catch (err) {
       if (err instanceof Error) {
         return thunkAPI.rejectWithValue(err.message);
@@ -77,6 +77,7 @@ const checkSessionAsync = createAsyncThunk(
         console.clear();
         return thunkAPI.rejectWithValue("User doesn't own a session");
       }
+      return await response.json() as { name: string; role: "admin" | "user" };
     } catch (err) {
       if (err instanceof Error) {
         return thunkAPI.rejectWithValue(err.message);
