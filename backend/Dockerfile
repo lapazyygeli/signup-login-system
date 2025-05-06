@@ -1,6 +1,6 @@
 ARG NODE_VERSION=22.14.0
 
-FROM node:${NODE_VERSION}
+FROM node:${NODE_VERSION}-slim
 
 WORKDIR /signup-login-system/backend
 

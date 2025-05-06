@@ -21,6 +21,23 @@ const initialState: UserState = {
   isSessionChecked: false,
 };
 
+const setLoggedOutState = (state: UserState, error: string | null = null) => {
+  state.isLoggedIn = false;
+  state.userName = null;
+  state.role = null;
+  state.error = error;
+};
+
+const setLoggedInState = (
+  state: UserState,
+  payload: { name: string; role: "admin" | "user" }
+) => {
+  state.isLoggedIn = true;
+  state.userName = payload.name;
+  state.role = payload.role;
+  state.error = null;
+};
+
 const userSlice = createSlice({
   name: "user",
   initialState,
@@ -32,43 +49,27 @@ const userSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(loginAsync.fulfilled, (state, action: PayloadAction<{name: string; role: "admin" | "user"}>) => {
-        state.isLoggedIn = true;
-        state.userName = action.payload.name;
-        state.role = action.payload.role;
-        state.error = null;
+        setLoggedInState(state, action.payload);
       })
       .addCase(loginAsync.rejected, (state, action) => {
-        state.isLoggedIn = false; // TODO: code duplication
-        state.userName = null;
-        state.error = action.payload as string;
+        setLoggedOutState(state, action.payload as string);
       });
 
     builder
       .addCase(logoutAsync.fulfilled, (state) => {
-        state.isLoggedIn = false;
-        state.userName = null;
-        state.role = null;
-        state.error = null;
+        setLoggedOutState(state);
       })
       .addCase(logoutAsync.rejected, (state, action) => {
-        state.isLoggedIn = false; // TODO: code duplication
-        state.userName = null;
-        state.role = null;
-        state.error = action.payload as string;
+        setLoggedOutState(state, action.payload as string);
       });
 
     builder
       .addCase(checkSessionAsync.fulfilled, (state, action: PayloadAction<{ name: string; role: "admin" | "user" }>) => {
-        state.isLoggedIn = true;
-        state.userName = action.payload.name;
-        state.role = action.payload.role;
-        state.error = null;
+        setLoggedInState(state, action.payload);
         state.isSessionChecked = true;
       })
       .addCase(checkSessionAsync.rejected, (state) => {
-        state.isLoggedIn = false;
-        state.userName = null;
-        state.role = null;
+        setLoggedOutState(state);
         state.isSessionChecked = true;
       });
   },

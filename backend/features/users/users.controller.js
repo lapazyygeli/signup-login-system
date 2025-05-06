@@ -3,7 +3,6 @@ import * as usersService from "./users.service.js";
 const getUsers = async (req, res) => {
   try {
     const users = await usersService.getUsers();
-
     if (!users || users.length === 0) {
       return res.status(404).json({ error: "No users found." });
     }
@@ -90,7 +89,6 @@ const loginUser = async (req, res) => {
       });
     });
   } catch (err) {
-    console.error(err); // TODO: Not necessary here
     res.status(500).json({ error: err });
   }
 };
@@ -100,9 +98,7 @@ const logoutUser = async (req, res) => {
     if (err) {
       return res.status(500).send("Error logging out");
     }
-
-    // TODO: extract string, make it const
-    res.clearCookie("connect.sid");
+    res.clearCookie(process.env.SESSION_COOKIE_NAME);
     res.status(200).end();
   });
 };
@@ -113,7 +109,6 @@ const isUserLoggedIn = async (req, res) => {
     if (!user) {
       return res.status(404).json({ error: "User not found" });
     }
-
     res.status(200).json({
       name: user.name,
       role: user.role,
