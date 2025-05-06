@@ -15,9 +15,6 @@ const getUsers = async (req, res) => {
 };
 
 const registerUser = async (req, res) => {
-  if (!req.body) {
-    return res.status(400).json({ error: "A Request without request body." });
-  }
   try {
     const existingUser = await usersService.findUserByName(req.body.name);
     if (existingUser) {
@@ -44,9 +41,6 @@ const registerUser = async (req, res) => {
 };
 
 const unregisterUser = async (req, res) => {
-  if (!req.body) {
-    return res.status(400).json({ error: "A Request without request body." });
-  }
   try {
     const query = await usersService.remove(req.body.id);
     res.json({
@@ -68,7 +62,8 @@ const loginUser = async (req, res) => {
   try {
     const user = await usersService.findUserByName(name);
     const isUserInvalid = !user || user.password !== password;
-    // TODO: I should compare hashed passwords and make this better
+    // TODO: I should compare at least hashed passwords
+    // and make this more secure.
 
     if (isUserInvalid) {
       return res.status(401).json({ error: "Invalid credentials" });
@@ -113,10 +108,6 @@ const logoutUser = async (req, res) => {
 };
 
 const isUserLoggedIn = async (req, res) => {
-  if (!req.session.userId) {
-    return res.status(401).end();
-  }
-
   try {
     const user = await usersService.findUserById(req.session.userId);
     if (!user) {

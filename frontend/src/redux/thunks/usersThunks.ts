@@ -12,9 +12,9 @@ const ACTION_TYPES = {
 const addUserAsync = createAsyncThunk(
   ACTION_TYPES.addUserAsync,
   async (formData: SignUpFormData, thunkAPI) => {
-    // TODO: consider if there should be some kind of authentication
-    // headers when passing credentials.
-    // I mean trying to pass data securely
+    // TODO: consider if there should be some kind of 
+    // authentication/authorization headers when passing credentials.
+    // I mean trying to pass data securely.
     try {
       const response: Response = await fetch(API_URLS.users.register, {
         method: "POST",

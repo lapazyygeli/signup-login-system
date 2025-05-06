@@ -23,6 +23,7 @@ const InputField: React.FC<InputProps> = ({ label, name, value, onChange, placeh
       onChange={onChange}
       placeholder={placeholder}
       type={type}
+      maxLength={45}
       required
     />
     {error && <p className="text-red-500 text-sm mt-1">{error}</p>}

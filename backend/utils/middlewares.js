@@ -11,3 +11,22 @@ export const requireAdmin = (req, res, next) => {
     next();
   });
 };
+
+export const requireAuth = (req, res, next) => {
+  const userId = req.session.userId;
+  if (!userId) {
+    return res.status(401).json({ error: "Not authenticated" });
+  }
+  next();
+};
+
+export const validate = (schema) => (req, res, next) => {
+  const { error } = schema.validate(req.body, { abortEarly: false });
+  if (error) {
+    return res.status(400).json({
+      error: "Validation error",
+      details: error.details.map((d) => d.message),
+    });
+  }
+  next();
+};

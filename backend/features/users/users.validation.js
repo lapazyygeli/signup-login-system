@@ -1,3 +1,7 @@
+import Joi from "joi";
+// Checks whether the request 
+// bodies are as they should be.
+
 export const registerSchema = Joi.object({
   name: Joi.string().min(1).max(45).required(),
   password: Joi.string().min(1).max(45).required(),

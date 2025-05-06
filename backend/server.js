@@ -1,12 +1,11 @@
 import { connectDB } from "./database/init.js";
+import { xss } from "express-xss-sanitizer";
+import { seedAdmin } from "./utils/seedAdmin.js";
 import express from "express";
 import cors from "cors";
-import { seedAdmin } from "./utils/seedAdmin.js";
 import usersRouter from "./features/users/users.route.js";
 import session from "express-session";
 import MongoStore from "connect-mongo";
-// scripteihin (package.json) voidaan tehä myös nodemon, + typescript.
-// TODO: All of our inputs should be sanitized.
 
 const app = express();
 connectDB().then(async () => {
@@ -19,6 +18,7 @@ const corsOptions = {
 };
 app.use("/", cors(corsOptions));
 app.use("/", express.json());
+app.use(xss());
 app.use(
   session({
     // Sessions are created for every request

@@ -1,13 +1,20 @@
 import express from "express";
-import { requireAdmin } from "../../utils/middlewares.js";
 import * as usersController from "./users.controller.js";
+import {
+  getUsersMiddlewares,
+  registerMiddlewares,
+  unregisterMiddlewares,
+  loginMiddlewares,
+  logoutMiddlewares,
+  sessionMiddlewares,
+} from "./users.middlwares.js";
 
 const usersRouter = express.Router();
-usersRouter.get("/", requireAdmin, usersController.getUsers);
-usersRouter.post("/register", usersController.registerUser);
-usersRouter.delete("/unregister", requireAdmin, usersController.unregisterUser);
-usersRouter.post("/login", usersController.loginUser);
-usersRouter.post("/logout", usersController.logoutUser);
-usersRouter.get("/session", usersController.isUserLoggedIn);
+usersRouter.get("/", getUsersMiddlewares, usersController.getUsers);
+usersRouter.post("/register", registerMiddlewares, usersController.registerUser);
+usersRouter.delete("/unregister", unregisterMiddlewares, usersController.unregisterUser);
+usersRouter.post("/login", loginMiddlewares, usersController.loginUser);
+usersRouter.post("/logout", logoutMiddlewares, usersController.logoutUser);
+usersRouter.get("/session", sessionMiddlewares, usersController.isUserLoggedIn);
 
 export default usersRouter;
