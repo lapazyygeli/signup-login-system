@@ -21,8 +21,15 @@ const About = () => {
             Read More
           </h2>
           <p>
-            For more information, please check out the README file included with
-            the project repository.
+            For more information, please check out the{" "}
+            <a
+              href="https://github.com/lapazyygeli/signup-login-system"
+              target="_blank"
+              className="text-indigo-500 underline"
+            >
+              README
+            </a>{" "}
+            file included with the project repository.
           </p>
         </div>
       </div>
