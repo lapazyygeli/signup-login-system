@@ -2,6 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { setError, SignUpFormData } from "../reducers/signupFormSlice";
 import { UserData } from "../reducers/usersSlice";
 import { API_URLS } from "../../constants/apiRoutes";
+import { loginAsync } from "./userThunks";
 
 const ACTION_TYPES = {
   addUserAsync: "users/addUserAsync",
@@ -12,7 +13,7 @@ const ACTION_TYPES = {
 const addUserAsync = createAsyncThunk(
   ACTION_TYPES.addUserAsync,
   async (formData: SignUpFormData, thunkAPI) => {
-    // TODO: consider if there should be some kind of 
+    // TODO: consider if there should be some kind of
     // authentication/authorization headers when passing credentials.
     // I mean trying to pass data securely.
     try {
@@ -32,6 +33,14 @@ const addUserAsync = createAsyncThunk(
       }
 
       console.log(responseJson.message);
+      const loginData = {
+        name: formData.name,
+        password: formData.password,
+      };
+
+      // Once the user is successfully added,
+      // automatically log them in
+      await thunkAPI.dispatch(loginAsync(loginData));
       return responseJson.data as UserData;
     } catch (err) {
       if (err instanceof Error) {
