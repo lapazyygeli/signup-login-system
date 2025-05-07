@@ -23,6 +23,7 @@ app.use(
   session({
     // Sessions are created for every request
     // for a specific path automatically
+    // But not saved!
     secret: process.env.SESSION_SECRET,
     store: MongoStore.create({
       mongoUrl: process.env.DB_URL,
