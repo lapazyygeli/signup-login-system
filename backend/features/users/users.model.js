@@ -11,7 +11,7 @@ const userSchema = new mongoose.Schema({
   },
 });
 
-const UserModel = mongoose.model(process.env.DB_COLLECTION_USERS, userSchema);
+const UserModel = mongoose.model("User", userSchema);
 const SessionModel = mongoose.connection.collection(
   process.env.DB_COLLECTION_SESSIONS
 );

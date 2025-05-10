@@ -4,6 +4,7 @@ import { seedAdmin } from "./utils/seedAdmin.js";
 import express from "express";
 import cors from "cors";
 import usersRouter from "./features/users/users.route.js";
+import todosRouter from "./features/todos/todos.router.js";
 import session from "express-session";
 import MongoStore from "connect-mongo";
 
@@ -51,6 +52,7 @@ app.use(
   })
 );
 app.use("/users", usersRouter);
+app.use("/todos", todosRouter);
 
 app.listen(process.env.BACKEND_PORT, () => {
   console.log(`Listening on port ${process.env.BACKEND_PORT}`);
