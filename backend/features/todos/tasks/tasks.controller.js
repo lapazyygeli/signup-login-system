@@ -16,6 +16,11 @@ async function getAllByList(req, res) {
       req.session.userId,
       req.params.listId
     );
+    if (!tasks) {
+      return res
+        .status(404)
+        .json({ error: "List not found or access denied." });
+    }
     res.json(tasks);
   } catch (err) {
     console.error(`Error while getting the tasks`, err.message);
