@@ -14,6 +14,14 @@ const About = () => {
             The main focus is on handling user requests and managing secure
             login/registration flow.
           </li>
+          <li>
+            Includes regular users and one pre-created admin user with the
+            username admin and password admin.
+          </li>
+          <li>
+            Each user has their own set of task lists, completely isolated from
+            others.
+          </li>
         </ul>
 
         <div>
