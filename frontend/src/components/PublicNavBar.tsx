@@ -11,8 +11,11 @@ const PublicNavBar = () => {
   return (
     <div className="bg-indigo-500">
       <nav className="max-w-5xl mx-auto sm:px-16">
-        <ul className="flex justify-center sm:justify-end py-4">
-          <div className="flex flex-wrap gap-6 text-white font-medium">
+        <ul className="flex justify-center sm:justify-between py-4">
+          <div className="hidden sm:flex items-center">
+            <span className="ml-3 text-white font-semibold text-xl">Signup/Login System</span>
+          </div>
+          <div className="flex items-center justify-center flex-wrap gap-6 text-white font-medium">
             <NavLinks navLinks={navLinks} />
           </div>
         </ul>

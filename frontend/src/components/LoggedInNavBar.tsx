@@ -15,7 +15,7 @@ const LoggedInNavBar = () => {
     <div className="bg-indigo-500">
       <nav className="max-w-5xl mx-auto sm:px-16">
         <ul className="flex justify-center sm:justify-end py-4">
-          <div className="flex flex-wrap gap-6 text-white font-medium">
+          <div className="flex flex-wrap justify-center gap-6 text-white font-medium">
             <NavLinks navLinks={navLinks} />
             <button
               onClick={() => dispatch(logoutAsync())}
