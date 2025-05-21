@@ -10,6 +10,7 @@ import {
 } from "../redux/thunks/tasksThunks";
 import Todo from "./Todo";
 import AddTaskInput from "./AddTodoInput";
+import { resetTasksState } from "../redux/reducers/tasksSlice";
 
 export interface Task {
   _id: string;
@@ -28,6 +29,9 @@ const TodoList = ({ listId }: Props) => {
 
   useEffect(() => {
     dispatch(getAllTasksByListAsync(listId));
+    return () => {
+      dispatch(resetTasksState());
+    };
   }, [dispatch, listId]);
 
   const handleAddTodo = async () => {
