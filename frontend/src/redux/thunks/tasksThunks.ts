@@ -5,7 +5,7 @@ const ACTION_TYPES = {
   getAllTasksAsync: "tasks/getAllTasksAsync",
   getAllTasksByListAsync: "tasks/getAllTasksByListAsync",
   getTaskAsync: "tasks/getAllTaskAsync",
-  createTaskAsync: "tasks/createTasksAsync",
+  createTaskAsync: "tasks/createTaskAsync",
   updateTaskStatusAsync: "tasks/updateTaskStatusAsync",
   updateTaskTitleAsync: "tasks/updateTaskCompletedAsync",
   removeTaskAsync: "tasks/removeTaskAsync",
