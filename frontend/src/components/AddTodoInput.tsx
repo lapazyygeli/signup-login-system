@@ -13,7 +13,7 @@ const AddTodoInput = ({ taskText, onTaskTextChange, onAddTask }: Props) => {
           type="text"
           value={taskText}
           onChange={(e) => onTaskTextChange(e.target.value)}
-          className="flex-1 px-2 py-1 border border-gray-300 rounded-md"
+          className="min-w-0 flex-1 px-2 py-1 border border-gray-300 rounded-md"
           placeholder="New task..."
           onKeyDown={(e) => {
             if (e.key === "Enter") onAddTask();

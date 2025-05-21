@@ -26,7 +26,7 @@ const Todo = ({
         value={task.title}
         onChange={(e) => handleTitleChange(task._id, e.target.value)}
         disabled={task.completed}
-        className={`flex-1 px-2 py-1 border rounded-md ${
+        className={`min-w-0 flex-1 px-2 py-1 border rounded-md ${
           task.completed ? "line-through text-gray-400" : "text-black"
         }`}
       />
