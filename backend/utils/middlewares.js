@@ -20,6 +20,8 @@ export const requireAuth = (req, res, next) => {
   next();
 };
 
+// TODO: only validates request body. To make better
+// should validate body, params, query, or even headers
 export const validate = (schema) => (req, res, next) => {
   const { error } = schema.validate(req.body, { abortEarly: false });
   if (error) {
