@@ -18,6 +18,7 @@ const AddTodoInput = ({ taskText, onTaskTextChange, onAddTask }: Props) => {
           onKeyDown={(e) => {
             if (e.key === "Enter") onAddTask();
           }}
+          maxLength={255}
         />
         <button
           onClick={onAddTask}

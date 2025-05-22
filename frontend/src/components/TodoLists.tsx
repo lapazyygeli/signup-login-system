@@ -85,6 +85,7 @@ const TodoLists = () => {
           }}
           className="w-full px-4 py-2 border border-indigo-500 rounded-md shadow-sm mb-2 text-indigo-700 font-medium focus:outline-none focus:ring-2 focus:ring-indigo-400"
           placeholder="New Task List Title"
+          maxLength={59}
         />
         <button
           onClick={handleAdd}
